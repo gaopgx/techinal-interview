@@ -48,6 +48,20 @@ JVM(java virtual mechinal), java虚拟机，是JRE的一部分。它是整个jav
 在java中，JVM可以理解的代码就叫做字节码（即.class文件），他不面向任何特定的处理器，只面向虚拟机。java语言通过字节码的方式，在一定程度上解决了#传统解释型语言执行效率低的问题，同时又保留了解释型语言可移植的特点。
 所以 Java 程序运行时比较高效，而且，由于字节码并不针对一种特定的机器，因此，Java 程序无
 须重新编译便可在多种不同操作系统的计算机上运行。
+### java程序从源代码到运行，3步：
+![image](https://user-images.githubusercontent.com/6525034/141608397-6bfae8cb-cd60-4120-9b94-b4d422345084.png)
+## 4. Oracle JDK和OpenJDK的对比
++ oracleJDK版本将每三年发布一次，而openJDK每三个月发布一次
++ OpenJDK 是一个参考模型并且是完全开源的，而Oracle JDK是OpenJDK的一个实现，并不是完全开源的；
++ Oracle JDK 比 OpenJDK 更稳定。OpenJDK和Oracle JDK的代码几乎相同，但Oracle JDK有更多的
+类和一些错误修复。因此，如果您想开发企业/商业软件，我建议您选择Oracle JDK，因为它经过了彻底的测试和稳定。某些情况下，有些人提到在使用OpenJDK 可能会遇到了许多应用程序崩溃的问题，但是，只需切换到Oracle JDK就可以解决问题；
++ 在响应性和JVM性能方面，Oracle JDK与OpenJDK相比提供了更好的性能；
++ Oracle JDK不会为即将发布的版本提供长期支持，用户每次都必须通过更新到最新版本获得支持来获取最新版本；
++ Oracle JDK根据二进制代码许可协议获得许可，而OpenJDK根据GPL v2许可获得许可。
+
+
+
+
 
 
 
