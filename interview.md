@@ -57,7 +57,12 @@ JVM(java virtual mechinal), java虚拟机，是JRE的一部分。它是整个jav
 类和一些错误修复。因此，如果您想开发企业/商业软件，我建议您选择Oracle JDK，因为它经过了彻底的测试和稳定。某些情况下，有些人提到在使用OpenJDK 可能会遇到了许多应用程序崩溃的问题，但是，只需切换到Oracle JDK就可以解决问题；
 + 在响应性和JVM性能方面，Oracle JDK与OpenJDK相比提供了更好的性能；
 + Oracle JDK不会为即将发布的版本提供长期支持，用户每次都必须通过更新到最新版本获得支持来获取最新版本；
-+ Oracle JDK根据二进制代码许可协议获得许可，而OpenJDK根据GPL v2许可获得许可。
++ Oracle JDK根据#二进制代码许可协议获得许可，而OpenJDK根据GPL v2许可获得许可。
+## java有哪些数据类型
+Java中有 8 种基本数据类型，分别为：
+6种数字类型：#四个整形两个浮点型：byte，short，int，long，float，double
+1种字符类型：char
+1种布尔类型： boolean
 
 
 
