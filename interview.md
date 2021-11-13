@@ -126,6 +126,152 @@ boolean：
 #这八种基本类型都有对应的包装类分别为：Byte、Short、Integer、Long、Float、Double、
 Character、Boolean
 
+## 6. Java中引用数据类型有哪些，它们与基本数据类型有什么区别？
+引用数据类型分3种：类，接口，数组；
+简单来说,只要不是基本数据类型.都是引用数据类型。 那他们有什么不同呢？
+1、从概念方面来说
+1,基本数据类型:变量名指向具体的数值
+2,引用数据类型:变量名不是指向具体的数值,而是指向存数据的内存地址,.也及时hash值
+2、从内存的构建方面来说(内存中,有堆内存和栈内存两者)
+1,基本数据类型:被创建时,在栈内存中会被划分出一定的内存,并将数值存储在该内存中.
+2,引用数据类型:被创建时,首先会在栈内存中分配一块空间,然后在堆内存中也会分配一块具体的空间用来
+存储数据的具体信息,即hash值,然后由栈中引用指向堆中的对象地址.
 
+举个例子
+![image](https://user-images.githubusercontent.com/6525034/141610446-4ef27ccf-6a6f-4177-bed5-933cee0ad40c.png)
 
+由上图可知，基本数据类型中会存在两个相同的1，而引用型类型就不会存在相同的数据。
+假如"hello"的引用地址是xxxxx1，声明str变量并其赋值"hello"实际上就是让str变量引用了"hello"的内
+存地址，这个内存地址就存储在堆内存中，是不会改变的，当再次声明变量str1也是赋值为"hello"时，
+此时就会在堆内存中查询是否有"hello"这个地址，如果堆内存中已经存在这个地址了，就不会再次创建
+了，而是让str1变量也指向xxxxx1这个地址，如果没有的话，就会重新创建一个地址给str1变量。
+从使用方面来说
+1,基本数据类型:判断数据是否相等，用==和!=判断。
+2,引用数据类型:判断数据是否相等，用equals()方法,==和!=是比较数值的。而equals()方法是比较内存
+地址的。
+补充：数据类型选择的原则
++ 如果要表示整数就使用int，表示小数就使用double；
++ 如果要描述日期时间数字或者表示文件（或内存）大小用long；
++ 如果要实现内容传递或者编码转换使用byte；
++ 如果要实现逻辑的控制，可以使用booleam；
++ 如果要使用中文，使用char避免中文乱码；
++ 如果按照保存范围：byte < int < long < double
+
+## 8. Java中的自动装箱与拆箱
+从下面的代码中就可以看到装箱和拆箱的过程
+
+![image](https://user-images.githubusercontent.com/6525034/141610634-40371a8b-3c5f-4c85-9bd6-7d954f3ec950.png)
+对于Java的自动装箱和拆箱，我们看看源码编译后的class文件，其实装箱调用包装类的valueOf方法，
+拆箱调用的是Integer.Value方法，下面就是变编译后的代码：
+常见面试一：
+这段代码输出什么？
+public class Main {
+public static void main(String[] args) {
+Integer i1 = 100;
+Integer i2 = 100;
+Integer i3 = 200;
+Integer i4 = 200;
+System.out.println(i1==i2);
+System.out.println(i3==i4);
+}
+}
+答案是:
+true
+false
+为什么会出现这样的结果？输出结果表明i1和i2指向的是同一个对象，而i3和i4指向的是不同的对象。此
+时只需一看源码便知究竟，下面这段代码是Integer的valueOf方法的具体实现：
+
+public static Integer valueOf(int i) {
+if(i >= -128 && i <= IntegerCache.high)
+return IntegerCache.cache[i + 128];
+else
+return new Integer(i);
+}
+private static class IntegerCache {
+static final int high;
+static final Integer cache[];
+static {
+final int low = -128;
+// high value may be configured by property
+int h = 127;
+if (integerCacheHighPropValue != null) {
+// Use Long.decode here to avoid invoking methods that
+// require Integer's autoboxing cache to be initialized
+int i = Long.decode(integerCacheHighPropValue).intValue();
+i = Math.max(i, 127);
+// Maximum array size is Integer.MAX_VALUE
+h = Math.min(i, Integer.MAX_VALUE - -low);
+}
+high = h;
+cache = new Integer[(high - low) + 1];
+int j = low;
+for(int k = 0; k < cache.length; k++)
+cache[k] = new Integer(j++);
+}
+private IntegerCache() {}
+}
+从这2段代码可以看出，在通过valueOf方法创建Integer对象的时候，如果数值在[-128,127]之间，便返
+回指向IntegerCache.cache中已经存在的对象的引用；否则创建一个新的Integer对象。
+上面的代码中i1和i2的数值为100，因此会直接从cache中取已经存在的对象，所以i1和i2指向的是同一
+个对象，而i3和i4则是分别指向不同的对象
+
+常见面试二：
+
+public class Main {
+public static void main(String[] args) {
+Double i1 = 100.0;
+Double i2 = 100.0;
+Double i3 = 200.0;
+Double i4 = 200.0;
+System.out.println(i1==i2);
+System.out.println(i3==i4);
+}
+}
+输出结果为：
+false
+false
+原因很简单，在某个范围内的整型数值的个数是有限的，而浮点数却不是。
+
+9. 为什么要有包装类型？
+让基本数据类型也具有对象的特征
+二者的区别：
+1. 声明方式不同：基本类型不使用new关键字，而包装类型需要使用new关键字来在堆中分配存储空
+间；
+2. 存储方式及位置不同：基本类型是直接将变量值存储在栈中，而包装类型是将对象放在堆中，然后
+通过引用来使用；
+3. 初始值不同：基本类型的初始值如int为0，boolean为false，而包装类型的初始值为null；
+4. 使用方式不同：基本类型直接赋值直接使用就好，而包装类型在集合如Collection、Map时会使用
+到。
+
+## 10. a=a+b与a+=b有什么区别吗?
+
++= 操作符会进行隐式自动类型转换,此处a+=b隐式的将加操作的结果类型强制转换为持有结果的类型,而
+a=a+b则不会自动进行类型转换.如：
+byte a = 127;
+byte b = 127;
+b = a + b; // 报编译错误:cannot convert from int to byte
+b += a;
+
+以下代码是否有错,有的话怎么改？
+short s1= 1;
+s1 = s1 + 1;
+有错误.short类型在进行运算时会自动提升为int类型,也就是说 s1+1 的运算结果是int类型,而s1是short
+类型,此时编译器会报错.
+正确写法：
+
+short s1= 1;
+s1 += 1;
+
++= 操作符会对右边的表达式结果强转匹配左边的数据类型,所以没错.
+
+## 11. 能将 int 强制转换为 byte 类型的变量吗？如果该值大于 byte 类型的范围，将会出现什么现象？
+
+我们可以做强制转换，但是 Java 中 int 是 32 位的，而 byte 是 8 位的，所以，如果强制转化，int 类型
+的高 24 位将会被丢弃，因为byte 类型的范围是从 -128 到 127
+
+## 12. Java程序是如何执行的
+我们日常的工作中都使用开发工具（IntelliJ IDEA 或 Eclipse 等）可以很方便的调试程序，或者是通过打
+包工具把项目打包成# jar 包或者 war 包，放入 Tomcat 等 Web 容器中就可以正常运行了，但你有没有想
+过 Java 程序内部是如何执行的？其实不论是在开发工具中运行还是在 Tomcat 中运行，Java 程序的执行
+流程基本都是相同的，它的执行流程如下：
 
