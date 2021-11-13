@@ -63,6 +63,16 @@ Java中有 8 种基本数据类型，分别为：
 6种数字类型：#四个整形两个浮点型：byte，short，int，long，float，double
 1种字符类型：char
 1种布尔类型： boolean
+![image](https://user-images.githubusercontent.com/6525034/141609695-e447b14c-d89b-4623-a7e4-cb067c546230.png)
+
+
+#byte：
++ byte 数据类型是8位、有符号的，以二进制补码表示的整数；
++ 最小值是 -128（-2^7）；
++ 最大值是 127（2^7-1）；
++ 默认值是 0；
++ byte 类型用在大型数组中节约空间，主要代替整数，因为 byte 变量占用的空间只有 int 类型的四分之一；
++ 例子：byte a = 100，byte b = -50。
 
 
 
