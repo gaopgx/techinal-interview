@@ -1,0 +1,34 @@
+## 1. Java 中操作字符串都有哪些类？它们之间有什么区别？
+操作字符串的类有： String 、 StringBuffer 、 StringBuilder 。
+String 和 StringBuffer、StringBuilder 的区别在于 String 声明的是不可变的对象，每次操作都会生成
+新的 String 对象，然后将指针指向新的 String 对象。
+而 StringBuffer、StringBuilder 可以在原有对象的基础上进行操作，所以在经常改变字符串内容的情况
+下最好不要使用 String。
+StringBuffer 和 StringBuilder 最大的区别在于，StringBuffer 是线程安全的，而 StringBuilder 是
+非线程安全的，但 StringBuilder 的性能却高于 StringBuffer，
+所以在单线程环境下推荐使用 StringBuilder，多线程环境下推荐使用 StringBuffer。
+
+## 2. String、StringBuffer和StringBuilder区别(类似上一题)
+1、数据可变和不可变
+1. String 底层使用一个不可变的字符数组 private final char value[]; 所以它内容不可变。
+2. StringBuffer 和 StringBuilder 都继承了 AbstractStringBuilder 底层使用的是可变字符数
+组： char[] value;
+2、线程安全
+StringBuilder 是线程不安全的，效率较高；而 StringBuffer 是线程安全的，效率较低。
+通过他们的 append() 方法来看， StringBuffer 是有同步锁，而 StringBuilder 没有：
+
+@Override
+public synchronized StringBuffer append(Object obj) {
+toStringCache = null;
+super.append(String.valueOf(obj));
+return this;
+}
+@Override
+public StringBuilder append(String str) {
+super.append(str);
+return this;
+}
+3、 相同点
+StringBuilder 与 StringBuffer 有公共父类 AbstractStringBuilder 。
+最后，操作可变字符串速度： StringBuilder > StringBuffer > String ，这个答案就显得不足为奇
+了。
