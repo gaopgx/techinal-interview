@@ -32,3 +32,22 @@ return this;
 StringBuilder 与 StringBuffer 有公共父类 AbstractStringBuilder 。
 最后，操作可变字符串速度： StringBuilder > StringBuffer > String ，这个答案就显得不足为奇
 了。
+
+## 4. String str="i"与 String str=new String("i")一样吗
+#不一样，因为内存的分配方式不一样。String str="i"的方式，Java 虚拟机会将其分配到常量池中；而
+String str=new String("i") 则会被分到堆内存中。
+代码示例：
+String x = "叶痕秋";
+String y = "叶痕秋";
+String z = new String("叶痕秋");
+System.out.println(x == y); // true
+System.out.println(x == z); // false
+
+String x = "叶痕秋" 的方式，Java 虚拟机会将其分配到常量池中，而常量池中没有重复的元素，比如当
+执行“叶痕秋”时，java虚拟机会先在常量池中检索是否已经有“叶痕秋”，如果有那么就将“叶痕秋”的地址
+赋给变量，如果没有就创建一个，然后在赋给变量；
+而 String z = new String(“叶痕秋”) 则会被分到堆内存中，即使内容一样还是会创建新的对象。
+
+
+
+
